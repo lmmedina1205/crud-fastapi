@@ -34,7 +34,7 @@ def crear_usuario(user: User):
     usuarios.append(usuario)
     return {"mensaje": "Usuario creado satisfactoriamente", "usuario": usuario}
 
-@app.post("/user/{user_id}")
+@app.get("/user/{user_id}")
 def obtener_usuario(user_id: int):
     for user in usuarios:
         if user["id"] == user_id:
@@ -52,6 +52,26 @@ def obtener_usuario_2(user_id: UserId):
                 return {"usuario":user}
         return {"respuesta": "Usuario no encontrado"}
 
+@app.delete("/user/{user_id}")
+def eliminar_usuario(user_id:int):
+    for index, user in enumerate(usuarios):
+        if user["id"] == user_id:
+            usuarios.pop(index)
+            return {"respuesta": "Usuario eliminado correctamente"}
+    return {"respuesta": "Usuario no encontrado"}
+
+
+@app.put("/user/{user_id}")
+def actualizar_usuario(user_id:int, updateUser: User ):
+    for index, user in enumerate(usuarios):
+        if user["id"] == user_id:
+            usuarios[index]["id"] = updateUser.dict()["id"]
+            usuarios[index]["nombre"] = updateUser.dict()["nombre"]
+            usuarios[index]["apellido"] = updateUser.dict()["apellido"]
+            usuarios[index]["direccion"] = updateUser.dict()["direccion"]
+            usuarios[index]["telefono"] = updateUser.dict()["telefono"]
+            return {"respuesta": "Usuario actualizado correctamente"}
+    return {"respuesta": "Usuario no encontrado"}
 
 if __name__ == "__main__":
     uvicorn.run("main:app", port=8000, reload=True)
