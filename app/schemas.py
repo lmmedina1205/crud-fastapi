@@ -17,3 +17,13 @@ class User(BaseModel): #Schema
 
 class UserId(BaseModel):
     id:int
+
+class ShowUser(BaseModel):
+    username:str
+    nombre:str
+    correo:str
+    apellido:str
+    class Config():
+        orm_mode = True
+
+        
