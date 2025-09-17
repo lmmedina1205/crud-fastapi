@@ -25,10 +25,6 @@ class UpdateUser(BaseModel):
     telefono: int | None = None
     correo: str | None = None
 
-
-class UserId(BaseModel):
-    id:int
-
 class ShowUser(BaseModel):
     username:str
     nombre:str
