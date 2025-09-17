@@ -15,6 +15,17 @@ class User(BaseModel): #Schema
     correo:str
     creacion:datetime = datetime.now()
 
+#Update User Model
+class UpdateUser(BaseModel):
+    username: str | None = None
+    password: str | None = None
+    nombre: str | None = None
+    apellido: str | None = None
+    direccion: str | None = None
+    telefono: int | None = None
+    correo: str | None = None
+
+
 class UserId(BaseModel):
     id:int
 
@@ -25,5 +36,6 @@ class ShowUser(BaseModel):
     apellido:str
     class Config():
         from_attributes = True
+
 
         
