@@ -66,12 +66,13 @@ def obtener_usuario_2(user_id: UserId):
         return {"respuesta": "Usuario no encontrado"}
 
 @router.delete("/{user_id}")
-def eliminar_usuario(user_id:int):
-    for index, user in enumerate(usuarios):
-        if user["id"] == user_id:
-            usuarios.pop(index)
-            return {"respuesta": "Usuario eliminado correctamente"}
-    return {"respuesta": "Usuario no encontrado"}
+def eliminar_usuario(user_id:int, db: Session = Depends(get_db)):
+    usuario = db.query(models.User).filter(models.User.id == user_id)
+    if not usuario.first():
+        return {"respuesta": "Usuario no encontrado"}
+    usuario.delete(synchronize_session=False)
+    db.commit()
+    return {"respuesta": "Usuario eliminado correctamente"}
 
 @router.put("/{user_id}")
 def actualizar_usuario(user_id:int, updateUser: User ):

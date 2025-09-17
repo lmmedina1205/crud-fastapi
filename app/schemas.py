@@ -24,6 +24,6 @@ class ShowUser(BaseModel):
     correo:str
     apellido:str
     class Config():
-        orm_mode = True
+        from_attributes = True
 
         
