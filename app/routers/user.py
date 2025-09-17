@@ -11,7 +11,7 @@ router = APIRouter(
 )
  
 @router.get("/", response_model = list[ShowUser])
-def obtener_usuarios(db: Session = Depends(get_db)):
+def obtener_usuario(db: Session = Depends(get_db)):
     data = db.query(models.User).all()
     return data
 
@@ -48,20 +48,11 @@ def crear_usuario(user: User, db: Session = Depends(get_db)):
     }
 
 @router.get('/{user_id}', response_model = ShowUser)
-def obtener_usuario(user_id: int, db: Session = Depends(get_db)):
+def obtener_usuarios(user_id: int, db: Session = Depends(get_db)):
     usuario = db.query(models.User).filter(models.User.id == user_id).first()
     if not usuario:
         return {"respuesta": "Usuario no encontrado"}    
     return usuario
-
-@router.post('/obtener_usuarios')
-def obtener_usuario_2(user_id: UserId):
-    for user in usuarios:
-        if user["id"] == user_id.id:
-            print(user, type(user))
-            if user["id"] == user_id.id:
-                return {"usuario":user}
-        return {"respuesta": "Usuario no encontrado"}
 
 @router.delete("/{user_id}")
 def eliminar_usuario(user_id:int, db: Session = Depends(get_db)):
